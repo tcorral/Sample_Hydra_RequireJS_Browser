@@ -1,0 +1,1 @@
+<div id="event_detail">Event Detail</div>
