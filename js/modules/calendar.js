@@ -1,5 +1,7 @@
-define(["hydra", "calendar", 'css!../../css/calendar.css'], function(Hydra, Calendar){
-    var doc = document;
+define(["hydra", "calendar", 'css!../../css/calendar.css'], function(Hydra, Cal){
+    var doc = document,
+        Calendar = Cal.calendar,
+        Locale_ES = Cal.locale_es;
     Hydra.module.register( 'calendar', function ( bus ) {
         return {
             oCalendar: null,
@@ -7,7 +9,7 @@ define(["hydra", "calendar", 'css!../../css/calendar.css'], function(Hydra, Cale
                 this.oCalendar = new Calendar();
                 this.oCalendar
                     .setContainer( doc.getElementById( "calendarContainer" ) )
-                    .setLocale( new CalendarLocale_ES() )
+                    .setLocale( new Locale_ES() )
                     .setDate( new Date() )
                     .insertIntoDOM();
             },
