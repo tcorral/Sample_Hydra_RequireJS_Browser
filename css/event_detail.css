@@ -1,5 +1,5 @@
-#event_detail
-{
-    color: #fff;
-    background-color: blue;
+#detail {
+    float: left;
+    padding-left: 50px;
+    padding-right: 50px;
 }

@@ -4,7 +4,10 @@ require.config({
         hydra:'libs/hydra',
         underscore: 'libs/underscore',
         text: "libs/text",
-        css: "libs/css"
+        css: "libs/css",
+        calendar: 'widget/Calendar',
+        jquery: 'libs/jquery-1.8.2',
+        dataHelper: 'dataHelper'
     },
     shim: {
         underscore: {
@@ -16,4 +19,4 @@ require.config({
         }
     }
 });
-define(['modules/calendar', 'modules/events_list', 'modules/event_detail']);
+define(['modules/events_list', 'modules/event_detail', 'modules/calendar']);

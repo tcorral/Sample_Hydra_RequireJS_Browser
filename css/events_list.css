@@ -1,5 +1,5 @@
-#events_list
-{
-    color: #fff;
-    background-color: green;
+#events_list {
+    float: left;
+    padding-left: 50px;
+    padding-right: 50px;
 }

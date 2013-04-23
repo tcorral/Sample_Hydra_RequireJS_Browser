@@ -1,24 +1,37 @@
-define(["hydra", "text!templates/event_detail.tpl", 'css!../../css/event_detail.css'], function(Hydra, tpl){
-    var oTpl = _.template(tpl),
-        oContainer = document.getElementById('ev_detail');
+define(["hydra", "jquery", "dataHelper", "text!../../js/templates/event_detail.tpl", 'css!../../css/event_detail.css'], function(Hydra, $, dataHelper, tpl){
+    var doc = document,
+        oTpl = _.template(tpl);
     Hydra.module.register('event_detail', function(bus)
     {
         return {
+            oDetail: null,
             events: {
-                schedule: {
-                    'event_detail:click': function()
-                    {
-                        console.log('Click on event detail');
+                'schedule': {
+                    'events:loadDetailInfo': function ( oData ) {
+                        var self = this;
+                        $.ajax( {
+                            url: dataHelper.url.generateDatabaseURL,
+                            dataType: 'json',
+                            success: function ( oJSON ) {
+                                self.createDetail( dataHelper.data.getFilteredDataById( oJSON, parseInt( oData.id, 10 ) ) );
+                            },
+                            error: function ( oError ) {
+                            }
+                        } );
+                    },
+                    'events:cleanDetail': function ( oData ) {
+                        this.oDetail.innerHTML = '';
                     }
                 }
             },
-            init: function()
-            {
-                oContainer.innerHTML += oTpl();
-                oContainer.addEventListener('click', function()
-                {
-                    bus.publish('schedule', 'event_detail:click', {});
-                });
+            createDetail: function ( oData ) {
+                this.oDetail.innerHTML = oTpl({event: oData});
+            },
+            init: function () {
+                this.oDetail = doc.getElementById( "detail" );
+            },
+            onDestroy: function() {
+                bus.unsubscribe('schedule', this);
             }
         };
     }).start();

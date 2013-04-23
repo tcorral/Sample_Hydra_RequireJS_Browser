@@ -1,28 +1,37 @@
-define(["hydra", "text!templates/calendar.tpl", 'css!../../css/calendar.css'], function(Hydra, tpl){
-    var oTpl = _.template(tpl),
-        oContainer = document.getElementById('cal');
-    Hydra.module.register('calendar', function(bus)
-    {
+define(["hydra", "calendar", 'css!../../css/calendar.css'], function(Hydra, Calendar){
+    var doc = document;
+    Hydra.module.register( 'calendar', function ( bus ) {
         return {
-            events: {
-                schedule: {
-                    'calendar:click': function()
-                    {
-                        console.log('Click on calendar');
-                    },
-                    'event_detail:click': function()
-                    {
-                        console.log('Click on event detail triggered but showed from calendar');
-                    }
-                }
+            oCalendar: null,
+            startCalendar: function () {
+                this.oCalendar = new Calendar();
+                this.oCalendar
+                    .setContainer( doc.getElementById( "calendarContainer" ) )
+                    .setLocale( new CalendarLocale_ES() )
+                    .setDate( new Date() )
+                    .insertIntoDOM();
             },
-            init: function()
-            {
-                oContainer.innerHTML += oTpl();
-                oContainer.addEventListener('click', function()
-                {
-                    bus.publish('schedule', 'calendar:click', {});
-                });
+            setBehavior: function () {
+                this.oCalendar.onSelectDate = function () {
+                    bus.publish( 'schedule', 'events:byDay', {
+                        year: this.nYearSelected,
+                        month: this.nMonthSelected,
+                        day: this.nDaySelected
+                    } );
+                };
+                this.oCalendar.onChangeMonth = function () {
+                    bus.publish( 'schedule', 'events:cleanList', {} );
+                    bus.publish( 'schedule', 'events:byMonth', {
+                        year: this.nYear,
+                        month: this.nMonth,
+                        day: this.nDay
+                    } );
+                };
+            },
+            init: function () {
+                this.startCalendar();
+                this.setBehavior();
+                this.oCalendar.onChangeMonth();
             }
         };
     }).start();

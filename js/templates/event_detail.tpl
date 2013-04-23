@@ -1,1 +1,8 @@
-<div id="event_detail">Event Detail</div>
+<div>
+    <h1>
+        <%=event.title%>
+    </h1>
+    <div>
+        <%=event.description%>
+    </div>
+</div>

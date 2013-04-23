@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Requiring modules using Hydra and Require</title>
+    <!--[if IE]>
+    <style type="text/css">
+        div.calendar_container div.calendar_body div.week div.today
+        {
+            height:21px;
+            width:24px;
+        }
+        div.calendar_container div.calendar_body div.week
+        {
+            margin-top:-8px;
+        }
+    </style>
+    <![endif]-->
 </head>
 <body>
-    <div id="cal"></div>
-    <div id="ev_list"></div>
-    <div id="ev_detail"></div>
+    <form id="formCalendarContainer" action="calendar.php" method="post">
+        <div id="calendarContainer"></div>
+    </form>
+    <ul id="events_list">
+    </ul>
+    <div id="detail"></div>
     <script type="text/javascript" data-main='js/app' src="js/libs/require.js"></script>
 </body>
 </html>
